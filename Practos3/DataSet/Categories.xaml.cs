@@ -68,6 +68,14 @@ namespace Practos3
                 CategoriesGrid.ItemsSource = categories.GetData();
             }
         }
+        private void CategoriesGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CategoriesGrid.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)CategoriesGrid.SelectedItem;
+                CategoriiNameTbx.Text = selectedRow["CategoriiName"].ToString();
+            }
+        }
     }
 }
    

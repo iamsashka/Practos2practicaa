@@ -117,6 +117,14 @@ namespace Practos3
             object cell = (CountryIDTbx.SelectedItem as DataRowView).Row[1];
             MessageBox.Show(cell.ToString());
         }
+        private void ProductsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProductsGrid.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)ProductsGrid.SelectedItem;
+                ProductsNameTbx.Text = selectedRow["ProductName"].ToString();
+            }
+        }
     }
 
 }

@@ -65,5 +65,13 @@ namespace Practos3
                 CountryGrid.ItemsSource = country.GetData();
             }
         }
+        private void CountryGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CountryGrid.SelectedItem != null)
+            {
+                DataRowView selectedRow = (DataRowView)CountryGrid.SelectedItem;
+                CountryNameTbx.Text = selectedRow["CountryName"].ToString();
+            }
+        }
     }
 }
