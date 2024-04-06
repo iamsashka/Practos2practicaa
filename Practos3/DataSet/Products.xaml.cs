@@ -3,6 +3,7 @@ using Practos3.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,15 +45,21 @@ namespace Practos3
             
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e) 
-        { if (CategoriiIDTbx.SelectedItem != null && CountryIDTbx.SelectedItem != null) 
-            { DataRowView selectedCategoriesRow = (DataRowView)CategoriiIDTbx.SelectedItem; 
-                int CategoriiID = (int)selectedCategoriesRow["CategoriiID"]; 
-                DataRowView selectedCountryRow = (DataRowView)CountryIDTbx.SelectedItem; 
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (CategoriiIDTbx.SelectedItem != null && CountryIDTbx.SelectedItem != null)
+            {
+                DataRowView selectedCategoriesRow = (DataRowView)CategoriiIDTbx.SelectedItem;
+                int CategoriiID = (int)selectedCategoriesRow["CategoriiID"];
+
+                DataRowView selectedCountryRow = (DataRowView)CountryIDTbx.SelectedItem;
                 int CountryID = (int)selectedCountryRow["CountryID"];
+
                 products.InsertQuery(ProductsNameTbx.Text, CategoriiID, CountryID, Convert.ToDecimal(PriceTbx.Text));
-                ProductsGrid.ItemsSource = products.GetData(); ClearInputs(); 
-            } 
+
+                ProductsGrid.ItemsSource = products.GetData();
+                ClearInputs();
+            }
         }
         private void ClearInputs()
         {
@@ -87,8 +94,13 @@ namespace Practos3
             {
                 DataRowView selectedRow = ProductsGrid.SelectedItems[0] as DataRowView;
                 int ProductID = (int)selectedRow.Row[0];
-                int CategoriiID = (int)CategoriiIDTbx.SelectedValue;
-                int CountryID = (int)CountryIDTbx.SelectedValue;
+
+                DataRowView selectedCategory = CategoriiIDTbx.SelectedItem as DataRowView;
+                int CategoriiID = (int)selectedCategory.Row[0];
+
+                DataRowView selectedCountry = CountryIDTbx.SelectedItem as DataRowView;
+                int CountryID = (int)selectedCountry.Row[0];
+
                 products.UpdateQuery(ProductsNameTbx.Text, CategoriiID, CountryID, decimal.Parse(PriceTbx.Text), ProductID);
                 ProductsGrid.ItemsSource = products.GetData();
             }
